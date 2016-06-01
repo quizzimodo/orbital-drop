@@ -14,8 +14,15 @@ module.exports = function(app, express) {
 
   app.get('/login', helpers.serveLogin)
 
-  app.get('/login/github', helpers.githubRedirect);
+  app.get('/login/github', passport.authenticate('github', { scope: [ 'user:email'] }));
 
-  app.get('/login/github/return', helpers.githubReturn);
+  app.get('/login/github/callback', passport.authenticate('github', {failureRedirect: 'login' }),
+  	function(req, res) {
+  		res.redirect('/air-drop/');
+  	});
+
+  // app.get('/auth/github', helpers.githubRedirect);
+
+  // app.get('/auth/github/callback', helpers.githubReturn);
 
 }
