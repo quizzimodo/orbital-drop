@@ -7,7 +7,7 @@ module.exports = {
 
     // NEW INFO: 
     clientID: 'fdc419f43731fc28b60f',
-    clientSecret: 'dca61a389248fba85659c295a19ec6bc4c77aa2b'
+    clientSecret: 'dca61a389248fba85659c295a19ec6bc4c77aa2b',
     callbackURL: 'http://192.81.135.170/login/github/return'
 	}
 }   
