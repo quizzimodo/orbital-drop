@@ -2,15 +2,15 @@ const     User = require('../controllers/userController.js')
 
 module.exports = function(passport){
 
-  const GitHubStrategy = require('passport-github').Strategy;
+  const GitHubStrategy = require('passport-github2').Strategy;
   const configAuth     = require('./auth.js');
 
   passport.serializeUser(function(user, done){
-    done(null, user)
+    done(null, user);
   });
 
   passport.deserializeUser(function(user, done) {
-    done(null, user)
+    done(null, user);
   });
 
   passport.use(new GitHubStrategy({
@@ -20,10 +20,10 @@ module.exports = function(passport){
     callbackURL     : configAuth.github.callbackURL
 
   },
-  function(token, refreshToken, profile, done) {
+  function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
         return done(null, profile);
-	// User.createUser(token, profile._json.login, profile._json.id, done)
+	// User.createUser(accessToken, profile._json.login, profile._json.id, done)
       })
     })
   )
