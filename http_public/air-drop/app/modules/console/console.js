@@ -20,7 +20,7 @@ angular.module('AirDrop.console', [])
   socket.on('updateUsers',function(users){
     
     $scope.users = users;
-      
+     console.log('Here are the user', users); 
     // change users object format into frontend object format
     var ping = document.getElementById("ping");
     ping.play();
