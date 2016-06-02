@@ -2,13 +2,14 @@
 var socket = io();
 angular.module('AirDrop.console', [])
 
-.controller('ConsoleController', function ($scope, state, stateMethods) {
+.controller('ConsoleController', function ($scope, state, stateMethods, BlackList) {
 
   $scope.chatRoom = []
   $scope.users;
   $scope.client;
 
   $.get('/api/user_profiles',function(response){
+
       var userId = response.id;
           $scope.client = response;
           state.user = $scope.client;
@@ -17,10 +18,15 @@ angular.module('AirDrop.console', [])
       socket.emit('createUser', userId, username, response);
   })
 
+  $scope.blacklistUser = function(username) {
+    console.log('Username inside of Blacklist on controller', $scope.client, username);
+    BlackList.blackListUser($scope.client, username);
+  }
+
   socket.on('updateUsers',function(users){
     
     $scope.users = users;
-     console.log('Here are the user', users); 
+     console.log('Here are the users', users); 
     // change users object format into frontend object format
     var ping = document.getElementById("ping");
     ping.play();
