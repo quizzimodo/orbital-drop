@@ -15,8 +15,8 @@ module.exports = function(passport){
 
   passport.use(new GitHubStrategy({
 
-    clientID        : configAuth.github.clientID,
-    clientSecret    : configAuth.github.clientSecret,
+    clientID        : process.env.CLIENT_ID || configAuth.github.clientID,
+    clientSecret    : process.env.CLIENT_SECRET || configAuth.github.clientSecret,
     callbackURL     : configAuth.github.callbackURL
 
   },
