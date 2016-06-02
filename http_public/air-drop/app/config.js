@@ -1,4 +1,4 @@
-;(function() {
+(function() {
 
 	/**
 	* A place to store shared consts and vars
