@@ -17,6 +17,7 @@ module.exports = function(passport){
     process.env.CLIENT_ID ? configAuth.prod : configAuth.dev,
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
+        User.createUser(accessToken, profile._json.login, profile._json.id, profile, done)
         return done(null, profile);
       })
     })
