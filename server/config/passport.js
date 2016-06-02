@@ -1,7 +1,6 @@
-const     User = require('../controllers/userController.js')
+const     User = require('../controllers/userController.js');
 
 module.exports = function(passport){
-
   const GitHubStrategy = require('passport-github2').Strategy;
   const configAuth     = require('./auth.js');
 
@@ -17,8 +16,9 @@ module.exports = function(passport){
     process.env.CLIENT_ID ? configAuth.prod : configAuth.dev,
     function(accessToken, refreshToken, profile, done) {
       process.nextTick(function(){
+        // User.createUser(token, profile._json.login, profile._json.id, done);
         return done(null, profile);
       })
     })
-  )
-}
+  );
+};
