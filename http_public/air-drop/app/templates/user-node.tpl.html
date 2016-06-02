@@ -2,8 +2,9 @@
 <div id="{{ user.id }}" class="node-block">
         <div class="node-container animated fadeIn">
                 <div class="node node-circle">
-                        <i> {{ user.profile.userData.username }}</i>
+                        <i>{{ user.profile.userData.username }}</i>
                        <img src="{{ user.profile.userData._json.avatar_url }}" />
+                       <button type="button" ng-click="blacklistUser(user.profile.userData.username)">Block</button>
                 </div>
         </div>
 </div>

@@ -21,9 +21,9 @@ var helpers = {
     });
   },
 
-  addToBlackListDbase : function (username, blockedUser) {
+  addToBlackListDbase : function (username, blackListUser) {
 
-  UsersModel.update({username: username}, {$push:{blackList : blockedUser}},
+  UsersModel.update({username: username}, {$push:{blackList : blackListUser}},
     function (err){
       if (err) {
         console.log("Add to blacklist failed");

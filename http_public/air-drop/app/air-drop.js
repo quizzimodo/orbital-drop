@@ -1,5 +1,6 @@
 angular.module('AirDrop', [
   'AirDrop.console',
+  'AirDrop.services',
   'ngRoute'
 ])
 .config(function($routeProvider, $httpProvider) {

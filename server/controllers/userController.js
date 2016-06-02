@@ -7,23 +7,26 @@ module.exports = {
 		db.getUserfromDbase(token, username, userId, profile, callback)
 	},
 
-	blacklist: function(username, blockedUser){
-		exports.userUtilMethods.unWhiteList(username, blockedUser)
-		username.blackList.push(blockedUser)
-		db.addToBlackListDB(username, blockedUser)
+	blacklist: function(req, resp){
+		console.log('req.body in blacklist is : ', req.body.username);
+		var username = req.body.username.username;
+		var blackListUser = req.body.blacklistuser;
+		//exports.userUtilMethods.unWhiteList(username, blackListUser)
+		// username.blackList.push(blackListUser)
+		db.addToBlackListDbase(username, blackListUser)
 	},
 
 	whitelist: function(username, approvedUser){
 		exports.userUtilMethods.unBlackList(username, approvedUser)
 		username.whiteList.push(blockedUser)
-		db.addToWhiteListDB(username, blockedUser)
+		db.addToWhiteListDbase(username, blockedUser)
 	},
 
 	unBlackList: function(username, unblockedUser){
 		for(var i = 0; i < username.blacklist.length; i++){
 			if(username.blacklist[i] === unblockedUser){
 				username.blacklist.splice(i,1);
-				db.removeFromBlackListDB(username, blockedUser);
+				db.removeFromBlackListDbase(username, blockedUser);
 				break;
 			}
 		}
@@ -33,7 +36,7 @@ module.exports = {
 		for(var i = 0; i < username.whitelist.length; i++){
 			if(username.whitelist[i] === unapprovedUser){
 				username.whiteList.splice(i,1);
-				db.removeFromWhiteListDB(username,blockedUser);
+				db.removeFromWhiteListDbase(username,blockedUser);
 				break;
 			}
 		}
