@@ -44,7 +44,7 @@ angular.module('AirDrop.console', [])
   })
 
   socket.on('refreshChat', function(value){
-    console.log(value)
+    console.log('This is chatRoom', value)
     $scope.chatRoom = value
     $scope.$apply();
   })
