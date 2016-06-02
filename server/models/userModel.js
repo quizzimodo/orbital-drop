@@ -1,5 +1,5 @@
 const mongoose        = require('mongoose');
-const dbURI           = 'mongodb://heroku_pfld10lp:t7h0ven0ag3o7p0bhegk90lpp7@ds021343.mlab.com:21343/heroku_pfld10lp';
+const dbURI           = process.env.MONGODB_URI || 'mongodb://heroku_pfld10lp:t7h0ven0ag3o7p0bhegk90lpp7@ds021343.mlab.com:21343/heroku_pfld10lp';
 const db              = mongoose.connection;
 const Schema          = mongoose.Schema;
 const dbUtilMethods   = require ('../utils/dbUtilMethods');
