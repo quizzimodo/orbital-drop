@@ -81,7 +81,6 @@ angular.module('AirDrop').directive('userNode', function() {
 
   					}
 });
-
 	    },
 		templateUrl: '/air-drop/app/templates/user-node.tpl.html',
 	}
