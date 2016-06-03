@@ -43,11 +43,11 @@ angular.module('AirDrop').directive('userNode', function() {
 
 	        dropzone = new Dropzone(element.context, config);
 	        
-	        dropzone.events.forEach(function(event_name){
-	        	dropzone.on(event_name, function(){
-	        		console.log(event_name + ' Biatch');
-	        	})
-	        })
+	        // dropzone.events.forEach(function(event_name){
+	        // 	dropzone.on(event_name, function(){
+	        // 		console.log(event_name + ' Biatch');
+	        // 	})
+	        // })
 	    },
 		templateUrl: '/air-drop/app/templates/user-node.tpl.html',
 	}

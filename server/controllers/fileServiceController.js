@@ -5,6 +5,8 @@ const path = require('path');
 const util = require('../utils/fileServiceUtil.js');
 const mime = require('mime-types');
 const multiparty = require('multiparty');
+var UsersModel = require('../models/userModel.js');
+
 
 var users = require('../models/activeUserModel.js');
 
@@ -47,45 +49,89 @@ module.exports = function(express, io){
 		upload : function(request, response, error){
 			// add middleware validation
 			var userId;
-			if(request.session.passport){
-				userId = request.session.passport.user.id
-			}else{
-				res.status(500).send({error:'User has no session!'});
-			}
+			var userName;
+			userId = request.session.passport.user.id;
+			userName = request.session.passport.user.username;
+			var found = false;
+
+			UsersModel.findOne({userId: request.query.id, blackList: userName}, function(err, user) {
+				if(user) {
+					found = true;
+				}
+				})
+				.then(function() {
+					if(found) {
+						response.status(500).send({error:"You've been diaper-blocked!"});						
+					} else {
+						var busboy = new Busboy({ headers: request.headers });
+						
+						// add listener when bus boy handles a file
+						busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+							//console.log(file, req, 'here')
+							// create a unique id and prepend to filename so there isn't namesake clashing
+							var uniqueId = uuid.v4();
+							// asychronously write a file using a stream to uploads folder
+							fstream = fs.createWriteStream(__dirname + '/../uploads/' + uniqueId + filename);
+							file.pipe(fstream);
+							// added another multi form parser because busboy doensn't grab all the fields in the form at once
+
+							var recieverUserId = request.query.id;
+							var filename = filename;
+
+							// add uniqueId and filename to user receiving download
+							users[recieverUserId].files[0] = util.createFile(uniqueId, filename);
+							
+							// emit a download prompt to the user that is receiving the upload
+							userSockets[recieverUserId].emit('requestTransfer', {filename:filename, senderUserId: userId});
+						});
+
+						// close request
+						busboy.on('finish', function() {
+							response.writeHead(303, { Connection: 'close', Location: '/' });
+							response.end();
+						});
+
+						request.pipe(busboy);
+					}
+
+				})
+			// if(request.session.passport){
+			// 	userId = request.session.passport.user.id;
+			// 	userName = request.session.passport.user.username;
+			// 	var found = false;
+			// 	console.log('userName is : ', userName)
+
+			// 	UsersModel.findOne({userId: request.query.id}, function(err, user) {
+			// 		if(user) {
+			// 			console.log('user is :', user)
+			// 			user.blackList.forEach(function(username) {
+			// 				console.log('username is :', username)
+			// 				if(username === userName) {
+			// 					found = true;
+			// 				}
+			// 			})
+			// 		}
+			// 	})
+			// 	.then(function(response) {
+			// 		if(found) {
+			// 			response.status(500).send({error:"You've been diaper-blocked!"});						
+			// 		}
+
+			// 	})
+			// }
+			// else{
+			// 	response.status(500).send({error:'User has no session!'});
+			// }
 			
+			// if(found) {
+			// 	console.log("You've been diaper-blocked!");
+			// 	return;
+			// }
 			/*** 
 				bus boy is responsible for parsing multipart form data since express 4.0 droped multipart handling
 				https://www.npmjs.com/package/busboy
 			***/
-			var busboy = new Busboy({ headers: request.headers });
 			
-			// add listener when bus boy handles a file
-			busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-				//console.log(file, req, 'here')
-				// create a unique id and prepend to filename so there isn't namesake clashing
-				var uniqueId = uuid.v4();
-				// asychronously write a file using a stream to uploads folder
-				fstream = fs.createWriteStream(__dirname + '/../uploads/' + uniqueId + filename);
-				file.pipe(fstream);
-				// added another multi form parser because busboy doensn't grab all the fields in the form at once
-
-				var recieverUserId = request.query.id;
-				var filename = filename;
-
-				// add uniqueId and filename to user receiving download
-				users[recieverUserId].files[0] = util.createFile(uniqueId, filename);
-				
-				// emit a download prompt to the user that is receiving the upload
-				userSockets[recieverUserId].emit('requestTransfer', {filename:filename, senderUserId: userId});
-			});
-
-			// close request
-			busboy.on('finish', function() {
-				response.writeHead(303, { Connection: 'close', Location: '/' });
-				response.end();
-			});
-
-			request.pipe(busboy);
 		},
 		download : function(request, response, error) {
 			// add middleware validation
@@ -99,7 +145,6 @@ module.exports = function(express, io){
 			/*** build redirect to application homepage if have no files ***/
 
 			var file;
-			console.log(userId, users,'lol')
 			if(users[userId].files.length){
 				file = users[userId].files[0]
 			}
@@ -130,7 +175,7 @@ module.exports = function(express, io){
 			if(request.session.passport){
 				userId = request.session.passport.user.id
 			}else{
-				res.status(500).send({error:'User has no session!'});
+				response.status(500).send({error:'User has no session!'});
 			}
 
 			var file;
