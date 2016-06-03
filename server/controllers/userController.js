@@ -22,8 +22,6 @@ module.exports = {
 	},
 
 	unBlackList: function(req, resp){
-		    console.log('inside userController')
-
 		var username = req.body.username.username;
 		var blackListUser = req.body.blacklistuser;
 		db.removeFromBlackListDbase(username, blackListUser);
