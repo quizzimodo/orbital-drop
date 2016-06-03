@@ -7,7 +7,7 @@ angular.module('AirDrop.console', [])
   $scope.chatRoom = []
   $scope.users;
   $scope.client;
-  $scope.blocked = false;
+  $scope.blocked = {};
 
   $.get('/api/user_profiles',function(response){
 
@@ -20,13 +20,14 @@ angular.module('AirDrop.console', [])
   })
 
   $scope.blacklistUser = function(username) {
-    $scope.blocked = true;
+    $scope.blocked[username] = true;
+    console.log('$scope.blocked is : ', $scope.blocked)
     alert(username + ' has been added to your blacklist');
     BlackList.blackListUser($scope.client, username);
   }
 
   $scope.unBlacklistUser = function(username) {
-    $scope.blocked = false;
+    $scope.blocked[username] = false;
     alert(username + ' has been removed from your blacklist');
     BlackList.unBlackListUser($scope.client, username);
   }
