@@ -19,8 +19,13 @@ angular.module('AirDrop.console', [])
   })
 
   $scope.blacklistUser = function(username) {
-    console.log('Username inside of Blacklist on controller', $scope.client, username);
+    alert(username + ' has been added to your blacklist');
     BlackList.blackListUser($scope.client, username);
+  }
+
+  $scope.unBlacklistUser = function(username) {
+    alert(username + ' has been removed from your blacklist');
+    BlackList.unBlackListUser($scope.client, username);
   }
 
   socket.on('updateUsers',function(users){
