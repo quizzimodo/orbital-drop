@@ -1,14 +1,20 @@
 <!-- animated slow infinite pulse hover-pause  -->
+  
 <div id="{{ user.id }}" class="node-block">
         <div class="node-container animated fadeIn">
                 <div class="node node-circle">
                         <i>{{ user.profile.userData.username }}</i>
                        <img src="{{ user.profile.userData._json.avatar_url }}" />
                        <button type="button" ng-click="blacklistUser(user.profile.userData.username)">Block</button>
-                       <button type="button" ng-click="unBlacklistUser(user.profile.userData.username)">UnBlock</button>
                 </div>
         </div>
+
 </div>
+    <div id="full-progress-bar" style="visibility: hidden">
+      <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+      </div>
+    </div>
 
 
 
