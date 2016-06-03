@@ -48,8 +48,6 @@ var helpers = {
 },
 
   removeFromBlackListDbase : function (username, blockedUser) {
-        console.log('inside removeFromBlackListDbase')
-
 
   UsersModel.update({username: username}, {$pull:{blackList : blockedUser}},
     function (err){
