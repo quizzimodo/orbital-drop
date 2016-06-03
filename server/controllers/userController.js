@@ -8,7 +8,6 @@ module.exports = {
 	},
 
 	blacklist: function(req, resp){
-		console.log('req.body in blacklist is : ', req.body.username);
 		var username = req.body.username.username;
 		var blackListUser = req.body.blacklistuser;
 		//exports.userUtilMethods.unWhiteList(username, blackListUser)
@@ -22,14 +21,12 @@ module.exports = {
 		db.addToWhiteListDbase(username, blockedUser)
 	},
 
-	unBlackList: function(username, unblockedUser){
-		for(var i = 0; i < username.blacklist.length; i++){
-			if(username.blacklist[i] === unblockedUser){
-				username.blacklist.splice(i,1);
-				db.removeFromBlackListDbase(username, blockedUser);
-				break;
-			}
-		}
+	unBlackList: function(req, resp){
+		    console.log('inside userController')
+
+		var username = req.body.username.username;
+		var blackListUser = req.body.blacklistuser;
+		db.removeFromBlackListDbase(username, blackListUser);
 	},
 	
 	unWhiteList: function(username, unapprovedUser){

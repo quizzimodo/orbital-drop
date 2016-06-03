@@ -11,6 +11,7 @@ module.exports = function(app,express){
 	app.get('/api/user_profiles', clientController.sendJSON);
 	app.get('/logout', clientController.logout);
 	app.post('/blacklistuser', userController.blacklist);
+	app.post('/unblacklistuser', userController.unBlackList);
 	//app.get('*', clientController.handleAll)
 
 }

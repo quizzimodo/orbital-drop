@@ -17,6 +17,20 @@ angular.module('AirDrop.services', [])
     });
   };
 
+  var unBlackListUser = function (username, blacklistuser) {
+    console.log('inside unBlackListUser')
+    return $http({
+      method: 'POST',
+      url: '/unblacklistuser',
+      data: {
+        username: username,
+        blacklistuser: blacklistuser
+      }
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
 
 
 
@@ -24,7 +38,7 @@ angular.module('AirDrop.services', [])
 
 
 	return {
-		blackListUser: blackListUser
-    
+		blackListUser: blackListUser,
+    unBlackListUser: unBlackListUser
   };
 })
