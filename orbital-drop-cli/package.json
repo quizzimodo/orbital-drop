@@ -1,0 +1,29 @@
+{
+  "name": "orbital-drop-cli",
+  "version": "1.0.0",
+  "description": "command line interface for orbital-drop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quizzimodo/orbital-drop.git"
+  },
+  "keywords": [
+    "file",
+    "sharing",
+    "orbital-drop",
+    "air-drop"
+  ],
+  "author": "Forrest Akin <forrest.akin@gmail.com> (https://github.com/forrest-akin)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quizzimodo/orbital-drop/issues"
+  },
+  "homepage": "https://github.com/quizzimodo/orbital-drop#readme",
+  "dependencies": {
+    "mmmagic": "^0.4.4",
+    "vorpal": "^1.11.1"
+  }
+}
