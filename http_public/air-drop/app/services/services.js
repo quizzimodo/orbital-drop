@@ -18,7 +18,6 @@ angular.module('AirDrop.services', [])
   };
 
   var unBlackListUser = function (username, blacklistuser) {
-    console.log('inside unBlackListUser')
     return $http({
       method: 'POST',
       url: '/unblacklistuser',
