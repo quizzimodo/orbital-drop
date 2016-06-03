@@ -52,14 +52,18 @@ angular.module('AirDrop').directive('userNode', function() {
     dropzone.on("totaluploadprogress", function(progress) {
       document.querySelector(".progress-bar").style.width = progress + "%";
       console.log(progress);
+      var downloadFinished = document.getElementById("downloadFinished");
       if(progress === 100) {
         window.setTimeout(function() {
+          downloadFinished.play();
           document.getElementById("full-progress-bar").style.visibility = "hidden";
         }, 2000);
       }
     })
 
     dropzone.on("drop", function(progress) {
+      var download = document.getElementById("download");
+      download.play();
       console.log("yoooooooo", progress);
       document.querySelector(".progress-bar").style.width = 0 + "%";
       document.getElementById("full-progress-bar").style.visibility = "visible"
