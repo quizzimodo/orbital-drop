@@ -6,6 +6,7 @@
                         <i>{{ user.profile.userData.username }}</i>
                        <img src="{{ user.profile.userData._json.avatar_url }}" />
                        <button type="button" ng-hide="blocked[user.profile.userData.username]" ng-click="blacklistUser(user.profile.userData.username)">Block</button>
+
                        <button type="button" ng-show="blocked[user.profile.userData.username]" ng-click="unBlacklistUser(user.profile.userData.username)">UnBlock</button>
                 </div>
         </div>
